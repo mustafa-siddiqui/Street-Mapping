@@ -152,9 +152,6 @@ public class Graph {
             }
         }
 
-        System.out.println("Hashset size: " + vertexSet.size());
-        System.out.println("Priority Queue size: " + edgeList.size());
-
         while (vertexSet.size() > 1 && edgeList.size() > 0) {
             // get edge with minimum weight
             Edge nextEdge = edgeList.poll();
@@ -178,9 +175,6 @@ public class Graph {
                 vSet1.addAll(vSet2);
                 vertexSet.remove(vSet2);
             }
-
-            System.out.println("set size: " + vertexSet.size());
-            System.out.println("edge list size: " + edgeList.size());
         }
         
         return resultList;
