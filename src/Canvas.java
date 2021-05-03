@@ -41,8 +41,8 @@ public class Canvas extends JComponent {
             Vertex end = Main.ShortestPathList.get(0);
 
             // indicate start vertex
-            g.setColor(Color.DARK_GRAY);
-            g.fillOval(Math.abs(scaleLong(start.getLongitude())), Math.abs(getHeight() - scaleLat(start.getLatitude())), 10, 10);
+            g.setColor(Color.ORANGE);
+            g.fillOval(Math.abs(scaleLong(start.getLongitude())), Math.abs(getHeight() - scaleLat(start.getLatitude())) - 5, 10, 10);
 
             // mention distance travelled on top of canvas
             g.setColor(Color.BLACK);
@@ -50,8 +50,8 @@ public class Canvas extends JComponent {
             g.drawString("Distance: " + df.format(Main.ShortestPathList.get(0).getDistance()) + " mi", getWidth()/2 - 60, 20);
 
             // indicate end vertex
-            g.setColor(Color.DARK_GRAY);
-            g.fillOval(Math.abs(scaleLong(end.getLongitude())), Math.abs(getHeight() - scaleLat(end.getLatitude())), 10, 10);
+            g.setColor(Color.ORANGE);
+            g.fillOval(Math.abs(scaleLong(end.getLongitude())), Math.abs(getHeight() - scaleLat(end.getLatitude())) - 5, 10, 10);
 
             // draw path in red
             Graphics2D g2 = (Graphics2D)g;
