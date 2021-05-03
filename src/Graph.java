@@ -30,7 +30,7 @@ public class Graph {
     }
 
     /*
-        Add ane edge (road) to the adjacency lists of the vertices 
+        Add an edge (road) to the adjacency lists of the vertices 
         (intersections) it connects.
     */
     public void addRoad(Edge connect, Vertex node1, Vertex node2) {

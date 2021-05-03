@@ -117,6 +117,6 @@ public class Canvas extends JComponent {
     */
     public void sketchLine(Graphics g, Vertex start, Vertex end) {
         g.drawLine(Math.abs(scaleLong(start.getLongitude())), Math.abs(getHeight() - scaleLat(start.getLatitude())), 
-                            Math.abs(scaleLong(end.getLongitude())), Math.abs(getHeight() - scaleLat(end.getLatitude())));
+                    Math.abs(scaleLong(end.getLongitude())), Math.abs(getHeight() - scaleLat(end.getLatitude())));
     }
 }
