@@ -140,6 +140,9 @@ public class Main extends JFrame {
                 System.out.println(ShortestPathList.get(j).getID());
                 System.out.printf("Distance Travelled: %.2f miles\n", ShortestPathList.get(j).getDistance());
             }
+            else {
+                System.out.println("Shortest Path could not be found!");
+            }
         }
 
         if (MinSpanningTree) {
