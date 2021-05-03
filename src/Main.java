@@ -2,7 +2,7 @@
  *  @file   Main.java
  *  @brief  Main driver code for the project.
  *  @author Mustafa Siddiqui
- *  @date   04/27/2021
+ *  @date   05/01/2021
  */
 
 import java.io.FileInputStream;
@@ -88,7 +88,7 @@ public class Main extends JFrame {
         // declare graph
         Graph mapPaths = new Graph();
 
-        int i = 0;
+        // read through file and create graph
         while (input.hasNextLine()) {
             String[] line = input.nextLine().split("\t");
 
@@ -116,20 +116,12 @@ public class Main extends JFrame {
                 Edge road = new Edge(line[1], mapPaths.getVertices().get(line[2]), mapPaths.getVertices().get(line[3]));
                 mapPaths.addRoad(road, mapPaths.getVertices().get(line[2]), mapPaths.getVertices().get(line[3]));
             }
-
-            ++i;
         }
 
         // close file since no longer needed
         input.close();
 
-        System.out.println("Num: " + i);
-
         // show output based on command line arguments
-        if (ShowMap) {
-            new Main().setVisible(true);
-        }
-
         if (ShortestPath) {
             Vertex start = mapPaths.getVertices().get(StartID.toString());
             Vertex end = mapPaths.getVertices().get(EndID.toString());
@@ -139,13 +131,14 @@ public class Main extends JFrame {
                 // returns the path from end to start
                 ShortestPathList = mapPaths.getPath(end, start);
                 
-                // print intersections to console
+                // print intersections & distance travelled to console
                 System.out.println("Shortest Path from " + start.getID() + " to " + end.getID() + ":");
                 int j;
                 for (j = ShortestPathList.size() - 1; j > 0; j--) {
                     System.out.print(ShortestPathList.get(j).getID() + " -> ");
                 }
                 System.out.println(ShortestPathList.get(j).getID());
+                System.out.printf("Distance Travelled: %.2f miles\n", ShortestPathList.get(j).getDistance());
             }
         }
 
@@ -164,8 +157,12 @@ public class Main extends JFrame {
                 System.out.println(MinSpanningTreeList.get(c).getID());
             }
             else {
-                System.out.println("Minimum Spanning Tree not found!");
+                System.out.println("Could not compute Minimum Spanning Tree");
             }
+        }
+
+        if (ShowMap) {
+            new Main().setVisible(true);
         }
     }
 }
