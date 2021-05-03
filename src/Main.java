@@ -9,7 +9,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import javax.swing.JFrame;
 
@@ -18,6 +17,12 @@ public class Main extends JFrame {
         Static variables to be used in drawing the map and the shortest path.
         Maximum latitude and longitude values used for normalizing values.
     */
+
+    // used to draw paths over map
+    static boolean ShortestPathFound = false;
+    static boolean KruskalTree = false;
+    static ArrayList<Vertex> ShortestPathList;
+    static ArrayList<Edge> MinSpanningTreeList;
 
     // lowest negative value possible
     static double maxLat = Double.MAX_VALUE * -1;
@@ -129,28 +134,37 @@ public class Main extends JFrame {
             Vertex start = mapPaths.getVertices().get(StartID.toString());
             Vertex end = mapPaths.getVertices().get(EndID.toString());
 
-            if (mapPaths.shortestPath(start, end)) {
+            ShortestPathFound = mapPaths.shortestPath(start, end);
+            if (ShortestPathFound) {
                 // returns the path from end to start
-                ArrayList<Vertex> pathList = mapPaths.getPath(end, start);
+                ShortestPathList = mapPaths.getPath(end, start);
                 
+                // print intersections to console
+                System.out.println("Shortest Path from " + start.getID() + " to " + end.getID() + ":");
                 int j;
-                for (j = pathList.size() - 1; j > 0; j--) {
-                    System.out.print(pathList.get(j).getID() + " -> ");
+                for (j = ShortestPathList.size() - 1; j > 0; j--) {
+                    System.out.print(ShortestPathList.get(j).getID() + " -> ");
                 }
-                System.out.println(pathList.get(j).getID());
+                System.out.println(ShortestPathList.get(j).getID());
             }
         }
 
         if (MinSpanningTree) {
             // show min spanning tree
-            HashSet<Edge> resultList = mapPaths.minSpanningTree();
-            if (resultList.isEmpty()) {
-                System.out.println("List empty.");
+            MinSpanningTreeList = mapPaths.minSpanningTree();
+            if (!MinSpanningTreeList.isEmpty()) {
+                KruskalTree = true;
+
+                // print roads to console
+                System.out.println("Minimum Spanning Tree:");
+                int c;
+                for (c = 0; c < MinSpanningTreeList.size() - 1; c++) {
+                    System.out.print(MinSpanningTreeList.get(c).getID() + ", ");
+                }
+                System.out.println(MinSpanningTreeList.get(c).getID());
             }
             else {
-                for (Edge e : resultList) {
-                    System.out.print(e.getID() + " -> ");
-                }
+                System.out.println("Minimum Spanning Tree not found!");
             }
         }
     }

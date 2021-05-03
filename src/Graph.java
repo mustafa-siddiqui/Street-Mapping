@@ -130,13 +130,13 @@ public class Graph {
         Kruskal's algorithm.
         ** can be very slow for huge datasets since set retrieval is not O(1) **
 
-        @return:    a hashset containing the edges which form the minimum
+        @return:    a list containing the edges which form the minimum
                     spanning tree
     */
-    public HashSet<Edge> minSpanningTree() {
+    public ArrayList<Edge> minSpanningTree() {
         PriorityQueue<Edge> edgeList = new PriorityQueue<Edge>();
         HashSet<HashSet<Vertex>> vertexSet = new HashSet<HashSet<Vertex>>();
-        HashSet<Edge> resultList = new HashSet<Edge>();
+        ArrayList<Edge> resultList = new ArrayList<Edge>();
         
         for (String key : vertices.keySet()) {
             // add a set containing one vertex into set of sets

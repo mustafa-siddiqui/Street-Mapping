@@ -20,6 +20,7 @@ public class Canvas extends JComponent {
 
     @Override
     public void paintComponent(Graphics g) {
+        // draw the base map (involves redrawing over lines)
         for (String key : Graph.vertices.keySet()) {
             ArrayList<Edge> neighbours = Graph.vertices.get(key).getAdjList();
 
@@ -28,8 +29,7 @@ public class Canvas extends JComponent {
                 Vertex start = Graph.vertices.get(key);
                 Vertex end = Graph.vertices.get(e.getEndVertexID());
                 
-                g.drawLine(Math.abs(scaleLong(start.getLongitude())), Math.abs(getHeight() - scaleLat(start.getLatitude())), 
-                            Math.abs(scaleLong(end.getLongitude())), Math.abs(getHeight() - scaleLat(end.getLatitude())));
+                sketchLine(g, start, end);
             }
         }
     }
@@ -60,5 +60,13 @@ public class Canvas extends JComponent {
         int scaleFactor_sides = 3 * getHeight() / 20;
 
         return (int)((latitude - Main.minLat)/(range) * scaleFactor_middle + scaleFactor_sides);
+    }
+
+    /*
+        Method to draw a line on the map given two vertices.
+    */
+    public void sketchLine(Graphics g, Vertex start, Vertex end) {
+        g.drawLine(Math.abs(scaleLong(start.getLongitude())), Math.abs(getHeight() - scaleLat(start.getLatitude())), 
+                            Math.abs(scaleLong(end.getLongitude())), Math.abs(getHeight() - scaleLat(end.getLatitude())));
     }
 }
