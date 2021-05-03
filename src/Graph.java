@@ -125,17 +125,77 @@ public class Graph {
         return pathList;
     }
 
+    /*
+        Method to determine the minimum spanning tree of a graph using
+        Kruskal's algorithm.
+        ** can be very slow for huge datasets since set retrieval is not O(1) **
+
+        @return:    a hashset containing the edges which form the minimum
+                    spanning tree
+    */
     public HashSet<Edge> minSpanningTree() {
         PriorityQueue<Edge> edgeList = new PriorityQueue<Edge>();
+        HashSet<HashSet<Vertex>> vertexSet = new HashSet<HashSet<Vertex>>();
+        HashSet<Edge> resultList = new HashSet<Edge>();
         
-        // store all edges in the graph in min priority queue
         for (String key : vertices.keySet()) {
+            // add a set containing one vertex into set of sets
+            HashSet<Vertex> v = new HashSet<Vertex>();
+            v.add(vertices.get(key));
+            vertexSet.add(v);
+
+            // add every edge into priority queue once
             ArrayList<Edge> temp = vertices.get(key).getAdjList();
             for (Edge e : temp) {
-                edgeList.add(e);
+                if (!edgeList.contains(e))
+                    edgeList.add(e);
             }
         }
 
-        HashSet<HashSet<Vertex>> vertexSet = new HashSet<HashSet<Vertex>>();
-    } 
+        System.out.println("Hashset size: " + vertexSet.size());
+        System.out.println("Priority Queue size: " + edgeList.size());
+
+        while (vertexSet.size() > 1 && edgeList.size() > 0) {
+            // get edge with minimum weight
+            Edge nextEdge = edgeList.poll();
+
+            // get the sets containing the two vertices connected by the edge
+            HashSet<Vertex> vSet1 = get(vertexSet, vertices.get(nextEdge.getStartVertexID()));
+            HashSet<Vertex> vSet2 = get(vertexSet, vertices.get(nextEdge.getEndVertexID()));
+
+            // should never happen but still checked to prevent from crashing
+            if (vSet1 == null || vSet2 == null) {
+                System.out.println("Sets are NULL");
+                continue;
+            }
+
+            if (!vSet1.equals(vSet2)) {
+                // add edge to resulting list
+                resultList.add(nextEdge);
+
+                // merge the two sets and remove the individual set while 
+                // keeping the merged set in the set of sets
+                vSet1.addAll(vSet2);
+                vertexSet.remove(vSet2);
+            }
+
+            System.out.println("set size: " + vertexSet.size());
+            System.out.println("edge list size: " + edgeList.size());
+        }
+        
+        return resultList;
+    }
+
+    /*
+        Helper method to obtain the set which contains the specified element 
+        from the set of sets.
+    */
+    public HashSet<Vertex> get(HashSet<HashSet<Vertex>> vertexSet, Vertex element) {
+        for (HashSet<Vertex> s : vertexSet) {
+            if (s.contains(element))
+                return s;
+        }
+
+        return null;
+    }
 }

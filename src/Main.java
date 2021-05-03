@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import javax.swing.JFrame;
 
@@ -142,6 +143,15 @@ public class Main extends JFrame {
 
         if (MinSpanningTree) {
             // show min spanning tree
+            HashSet<Edge> resultList = mapPaths.minSpanningTree();
+            if (resultList.isEmpty()) {
+                System.out.println("List empty.");
+            }
+            else {
+                for (Edge e : resultList) {
+                    System.out.print(e.getID() + " -> ");
+                }
+            }
         }
     }
 }
